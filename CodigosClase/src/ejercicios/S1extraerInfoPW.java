@@ -21,11 +21,17 @@ public class S1extraerInfoPW {
             codigoFuente = codigoFuente + linea;
         }
         reader.close();
-        System.out.println(codigoFuente);
+        //System.out.println(codigoFuente);
 
         //use indexOf, substring y length
-
-
-
+        
+        while(true){
+            
+            if(codigoFuente.indexOf("fsdfd")== -1){
+                break;
+            }
+            
+        
+        }
     }   
 }
