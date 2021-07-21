@@ -1,7 +1,7 @@
 
 package semana1;
 
-public class Variables {
+class Variables {
     
     public static void main(String[] args){
         System.out.println("Hola mundo!!");
