@@ -8,6 +8,12 @@ public class PrincipalCirculo {
         
         Circulo circulo2 = new Circulo();
         
+        Circulo circulo3 = new Circulo(5);
+        
+        Circulo circulo4 = new Circulo(5,5);
+        System.out.println("radio circulo 4: "+ circulo4.getRadio());
+        
+        System.out.println("radio circulo 1 antes cambiar: "+ circulo1.getRadio());
         circulo1.setRadio(9);
         circulo2.setRadio(2);
         

@@ -6,7 +6,7 @@ public class Vehiculo {
     private int precio;
 
     public int getPrecio() {
-        return precio;
+        return this.precio;
     }
 
     public void setPrecio(int precio) {
