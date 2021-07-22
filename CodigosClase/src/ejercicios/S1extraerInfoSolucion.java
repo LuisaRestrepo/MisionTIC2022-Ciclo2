@@ -26,11 +26,28 @@ public class S1extraerInfoSolucion {
         reader.close();
         while (true) {
 
-            if (codigoFuente.indexOf("") == -1) {
+            if (codigoFuente.indexOf("((String('") == -1) {
                 break;
             }
-
-
+                        
+            //nombre
+            int start = codigoFuente.indexOf("((String('")+10;
+            int end = codigoFuente.indexOf(")).replace",start);
+            System.out.println("Nombre "+codigoFuente.substring(start,end));
+            
+            //precio
+            start = codigoFuente.indexOf("price: ")+8;
+            end = codigoFuente.indexOf("previousPrice",start);
+            System.out.println("Precio "+codigoFuente.substring(start,end));
+            
+            //marca
+            start = codigoFuente.indexOf("brand:")+7;
+            end = codigoFuente.indexOf("category",start);
+            System.out.println("Marca "+codigoFuente.substring(start,end));
+            System.out.println("***************************************");
+            codigoFuente = codigoFuente.substring(end+2);
+            
         }
+        
     }
 }

@@ -38,6 +38,11 @@ public class Point {
     return dist;
     }
     
+    public double distance(int x, int y){
+    double dist = Math.sqrt(Math.pow(this.x-x,2)+Math.pow(this.y-y,2));
+    return dist;
+    }
+    
     public double distance(Point p){
     double dist = Math.sqrt(Math.pow(this.x-p.getX(),2)+Math.pow(this.y-p.getY(),2));       
     return dist;

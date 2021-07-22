@@ -36,22 +36,7 @@ public class S1extraerInfoPW {
         //for (int i = 0 ; i < codigoFuente.length()-1; i++){
         while (true) {
 
-            if (codigoFuente.indexOf("name: ((String('") == -1) {
-                break;
-            }
-
-            int i = codigoFuente.indexOf("name: ((String('");
-
-            int indexName = i;
-            int indexNameEnd = codigoFuente.indexOf("'}", indexName);
-            String subcadena = codigoFuente.substring(indexName, indexNameEnd - 1);
-            //System.out.println(subcadena);
-
-            System.out.print(subcadena.substring(41, subcadena.indexOf("')).replace")) + " "); // imprime el nombre
-            System.out.print(subcadena.substring(subcadena.indexOf("price: '") + 8, subcadena.indexOf("',                        previousPrice : ")) + " "); // imprime el precio
-            System.out.println(subcadena.substring(subcadena.indexOf("brand: '") + 8, subcadena.indexOf("',                        category: '")) + " "); // imprime el brand
-            codigoFuente = codigoFuente.substring(indexNameEnd);
-
+         
         }
 
     }
