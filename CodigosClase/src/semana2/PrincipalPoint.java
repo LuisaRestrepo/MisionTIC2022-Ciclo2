@@ -16,9 +16,18 @@ public class PrincipalPoint {
        double resultado = p1.distance(p2.getX(),p2.getY());
        double resultado3 = p1.distance(p2);
        
+       double resultado4 = p1.distance(3,4);
+       System.out.println("Resultado p1: "+resultado);
+       System.out.println("Resultado p1 objeto: "+resultado3);
+       System.out.println("Resultado p1 int: "+resultado4);
+       
        
        double resultado2 = p3.distance(p4.getX(),p4.getY());
-       
+       Point midP = p1.midPoint(p2);
+       System.out.println("Resultado midP: "+midP);
+       System.out.println("Resultado midP toSring(): "+midP.toString());
+       System.out.println("Resultado midPx: "+midP.getX());
+       System.out.println("Resultado midPy: "+midP.getY());
           
    
        System.out.println("Resultado: "+resultado);
