@@ -12,10 +12,18 @@ public class Point {
         //this.y = 0;
     }
     
+    public Point(double t) {
+        this(t,0);
+        //this.x = 0;
+        //this.y = 0;
+    }
+    
     //2
     public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
+        if(x >= 0 && y >= 0){
+            this.x = x;
+            this.y = y;
+        }
     }
         
     //3

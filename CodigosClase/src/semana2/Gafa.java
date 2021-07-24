@@ -30,5 +30,9 @@ public class Gafa {
         System.out.println("IVA "+Gafa.IVA);
         System.out.println("ENVIO "+Gafa.ENVIO);
     }
+    
+    public double getPrecio(){
+        return this.precio;
+    }
 
 }

@@ -7,7 +7,7 @@ public class PrincipalPoint {
        Point p1 = new Point(2,1);
        Point p2 = new Point(4,3);
        
-       Point p3 = new Point(5,7);
+       Point p3 = new Point(5);
        Point p4 = new Point(1,2);
        
        //p1.setX(2);

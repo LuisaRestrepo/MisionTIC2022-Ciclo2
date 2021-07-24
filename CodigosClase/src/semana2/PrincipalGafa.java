@@ -24,9 +24,9 @@ public class PrincipalGafa {
         Gafa g1 = new Gafa("Rayban",5000);
         System.out.println(g1.nombre);
         System.out.println(g1.precioConIva());
+        System.out.println(g1.precioConIva());
+        System.out.println(g1.getPrecio());
         Gafa g2 = new Gafa("Antonio banderas",3000);
-        
-
     }
     
 }
