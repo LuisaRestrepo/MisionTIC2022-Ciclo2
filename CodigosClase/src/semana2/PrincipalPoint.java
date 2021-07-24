@@ -34,6 +34,10 @@ public class PrincipalPoint {
        double dist = Math.sqrt(Math.pow(p1.getX()-p2.getX(),2)+Math.pow(p1.getY()-p2.getY(),2));
        System.out.println(dist);
        double dist2 = Math.sqrt(Math.pow(p3.getX()-p4.getX(),2)+Math.pow(p3.getY()-p4.getY(),2));       
+    
+       Point midP2 = Point.midPointStatic(p1, p2);
+       System.out.println("Resultado midP2 toSring(): "+midP2.toString());
+    
     }
  
 }

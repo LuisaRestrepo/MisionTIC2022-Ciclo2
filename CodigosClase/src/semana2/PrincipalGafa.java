@@ -27,6 +27,7 @@ public class PrincipalGafa {
         System.out.println(g1.precioConIva());
         System.out.println(g1.getPrecio());
         Gafa g2 = new Gafa("Antonio banderas",3000);
+        System.out.println(Gafa.contador);
     }
     
 }

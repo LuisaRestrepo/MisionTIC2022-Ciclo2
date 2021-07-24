@@ -7,10 +7,13 @@ public class Gafa {
     private double precio;
     public final static double IVA = 0.19;
     public static int ENVIO = 2000;
+    public static int contador = 0;
+
 
     public Gafa(String nombre, double precio) {
         this.nombre = nombre;
         this.precio = precio;
+        contador++;
     }
 
     public double precioConIva() {
