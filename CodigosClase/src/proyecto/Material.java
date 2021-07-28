@@ -9,16 +9,16 @@ public class Material {
     private String codigo;
     private String autor;
     private int anio;
-    public static int contador = 1;
+    //public static int contador = 1;
     
     //Constructor
-    public Material(String t,String c, String a, int anio){
-        this.id = contador;
+    public Material(int id, String t,String c, String a, int anio){
+        this.id = id;
         this.titulo = t;
         this.codigo = c;
         this.autor = a;
         this.anio = anio;
-        contador++;
+        //contador++;
     }
     
     //Métodos
