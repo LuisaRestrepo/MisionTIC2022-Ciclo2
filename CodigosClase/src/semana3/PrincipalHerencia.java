@@ -21,6 +21,23 @@ public class PrincipalHerencia {
         ea1.setSalario(2000);
         System.out.println(ea1.toString());
         
+        
+        Persona persona1 = new Empleado();
+        persona1.setNombre("Luisa");
+        //persona1.setEmpresa("Hola");
+        
+        
+        Empleado temp = (Empleado) persona1;
+        temp.setEmpresa("MinTIC");
+        System.out.println(temp.toString());
+        
+        Persona persona2 = new EmpleadoAsalariado();
+        EmpleadoAsalariado eaa1 = (EmpleadoAsalariado) persona2;
+        eaa1.setNombre("a");
+        eaa1.setEmpresa("b");
+        eaa1.setSalario(0);
+        System.out.println(eaa1.toString());
+        
     }
     
 }
