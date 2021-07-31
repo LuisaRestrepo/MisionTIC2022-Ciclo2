@@ -1,5 +1,7 @@
 
-package semana3;
+package semana3.Polimorfismo;
+
+import semana3.Polimorfismo.AnimalAbstracta;
 
 
 public interface Comestible {

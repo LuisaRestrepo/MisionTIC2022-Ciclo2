@@ -1,5 +1,5 @@
 
-package semana3;
+package semana3.Polimorfismo;
 
 public class Gato extends AnimalAbstracta{
     

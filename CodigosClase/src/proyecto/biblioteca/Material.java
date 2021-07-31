@@ -1,5 +1,5 @@
 
-package proyecto;
+package proyecto.biblioteca;
 
 
 public class Material {
@@ -56,6 +56,10 @@ public class Material {
 
     public void setAnio(int anio) {
         this.anio = anio;
+    }
+    
+    public String toString(){
+     return "Material - "+this.id + ", "+ this. titulo +", "+ this.codigo+", "+ this.autor +", "+ this.anio;
     }
     
     

@@ -1,5 +1,5 @@
 
-package semana3;
+package semana3.Arreglos;
 
 import java.util.ArrayList;
 
