@@ -35,7 +35,7 @@ public class PrincipalMaterial {
             }
             System.out.println("");
         }
-
+        
         System.out.println("*************************");
         b1.eliminar(0);
         Object[][] table4 = b1.listar();
@@ -45,6 +45,7 @@ public class PrincipalMaterial {
             }
             System.out.println("");
         }
+        
     }
 
 }
