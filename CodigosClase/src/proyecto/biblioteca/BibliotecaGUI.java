@@ -16,11 +16,11 @@ import static proyecto.biblioteca.Biblioteca.*;
  * @author USUARIO
  */
 public class BibliotecaGUI extends javax.swing.JFrame {
-    
+
     public static Biblioteca b1;
     public static Object[][] data;
     public static TableModel modelo;
-    public static String[] columnas = {"ID","TITULO","CODIGO","AUTOR","AÑO"};
+    public static String[] columnas = {"ID", "TITULO", "CODIGO", "AUTOR", "AÑO"};
 
     /**
      * Creates new form BibliotecaGUI
@@ -147,12 +147,27 @@ public class BibliotecaGUI extends javax.swing.JFrame {
 
         modificar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         modificar.setText("Modificar");
+        modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarActionPerformed(evt);
+            }
+        });
 
         buscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         buscar.setText("Buscar");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
 
         eliminar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         eliminar.setText("Eliminar");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -238,25 +253,99 @@ public class BibliotecaGUI extends javax.swing.JFrame {
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
         String titulo1 = titulo.getText();
         String codigo1 = codigo.getText();
-        String autor1 = autor.getText();       
+        String autor1 = autor.getText();
         int anio1 = Integer.parseInt(anio.getText());
         b1.agregar(titulo1, codigo1, autor1, anio1);
         JOptionPane.showMessageDialog(this, "Libro guardado");
-        data = b1.listar();
-        modelo = new DefaultTableModel(data, columnas);
-        tabla.setModel(modelo);
-        
+        actualizarModelo();
+//        data = b1.listar();
+//        modelo = new DefaultTableModel(data, columnas);
+//        tabla.setModel(modelo);
+        titulo.setText("");
+        codigo.setText("");
+        autor.setText("");
+        anio.setText("");
+
     }//GEN-LAST:event_agregarActionPerformed
 
     private void tablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMousePressed
-        
-        int idLibro =Integer.parseInt(String.valueOf(modelo.getValueAt(tabla.getSelectedRow(),0)));
-        Object[][] libro = b1.obtenerPorId(idLibro);
+
+        int id = (int) tabla.getValueAt(tabla.getSelectedRow(), 0);
+        Object[][] libro = b1.obtenerPorId(id);
         titulo.setText((String) libro[0][1]);
         codigo.setText((String) libro[0][2]);
         autor.setText((String) libro[0][3]);
-        //anio.  (libro[0][4]);
+        anio.setValue(libro[0][4]);
     }//GEN-LAST:event_tablaMousePressed
+
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        try {
+            int idBuscar = Integer.parseInt(buscarID.getText());
+            Object[][] libro = b1.obtenerPorId(idBuscar);
+
+            if (libro[0][0] == null) {
+                JOptionPane.showMessageDialog(this, "Libro no existe");
+            } else {
+                titulo.setText((String) libro[0][1]);
+                codigo.setText((String) libro[0][2]);
+                autor.setText((String) libro[0][3]);
+                anio.setValue(libro[0][4]);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "El valor ingresado no es un número");
+        }
+    }//GEN-LAST:event_buscarActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        try {
+            int idBuscar = Integer.parseInt(buscarID.getText());
+            Object[][] libro = b1.obtenerPorId(idBuscar);
+
+            if (libro[0][0] == null) {
+                JOptionPane.showMessageDialog(this, "Libro no existe");
+            } else {
+                b1.eliminar(idBuscar);
+
+                data = b1.listar();
+                modelo = new DefaultTableModel(data, columnas);
+                tabla.setModel(modelo);
+                actualizarModelo();
+                JOptionPane.showMessageDialog(this, "Libro eliminado con éxito");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "El valor ingresado no es un número");
+        }
+    }//GEN-LAST:event_eliminarActionPerformed
+
+    private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+        try {
+
+            int idBuscar = Integer.parseInt(buscarID.getText());
+            Object[][] libro = b1.obtenerPorId(idBuscar);
+            if (libro[0][0] == null) {
+                JOptionPane.showMessageDialog(this, "Libro no existe");
+            } else {
+                String titulo1 = titulo.getText();
+                String codigo1 = codigo.getText();
+                String autor1 = autor.getText();
+                int anio1 = Integer.parseInt(anio.getText());
+
+                b1.modificar(idBuscar, titulo1, codigo1, autor1, anio1);
+                JOptionPane.showMessageDialog(this, "Libro modificado con éxito");
+                actualizarModelo();
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "El valor ingresado no es un número");
+        }
+
+    }//GEN-LAST:event_modificarActionPerformed
+
+    public void actualizarModelo() {
+        data = b1.listar();
+        modelo = new DefaultTableModel(data, columnas);
+        tabla.setModel(modelo);
+    }
 
     /**
      * @param args the command line arguments
@@ -275,13 +364,17 @@ public class BibliotecaGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BibliotecaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BibliotecaGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BibliotecaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BibliotecaGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BibliotecaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BibliotecaGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BibliotecaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BibliotecaGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
