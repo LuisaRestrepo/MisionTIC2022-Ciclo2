@@ -2,6 +2,7 @@
 package proyecto.parqueadero;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public class Carro extends Vehiculo{
@@ -20,7 +21,9 @@ public class Carro extends Vehiculo{
     @Override
     public String pago() {
         Date hoy = new Date();
-        double tiempoTranscurrido = (hoy.getTime()-super.ingreso.getTime())/36000000;
+        double  diff= hoy.getTime()-super.ingreso.getTime();
+        long tiempoTranscurrido = TimeUnit.MILLISECONDS.toMinutes((long) diff);
+        //double tiempoTranscurrido = (hoy.getTime()-super.ingreso.getTime())/60000;
         double precioTotal = tiempoTranscurrido * precio;
         return "El Carro de placa "+super.placa+", lleva "+tiempoTranscurrido+" minutos, TOTAL PAGAR:"+precioTotal+"$";
     }
