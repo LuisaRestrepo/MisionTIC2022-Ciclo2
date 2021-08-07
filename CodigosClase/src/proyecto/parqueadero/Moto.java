@@ -21,12 +21,12 @@ public class Moto extends Vehiculo{
     @Override
     public String pago() {
         Date hoy = new Date();
-        double  diff= hoy.getTime()-super.ingreso.getTime();
-        long tiempoTranscurrido = TimeUnit.MILLISECONDS.toMinutes((long) diff);
 
-        //double tiempoTranscurrido = (hoy.getTime()-super.ingreso.getTime())/60000;
-        double precioTotal = tiempoTranscurrido * precio;
-        return "La Moto de placa "+super.placa+", lleva "+tiempoTranscurrido+" minutos, TOTAL PAGAR:"+precioTotal+"$";
+        long  diff= hoy.getTime()-super.ingreso.getTime();
+        long diffSeconds = diff / 1000;
+        double precioTotal =diffSeconds * (precio/60);
+
+        return "La Moto de placa "+super.placa+", lleva "+diffSeconds/60.0+" minutos, TOTAL PAGAR:"+precioTotal+"$";
     }
     
 }

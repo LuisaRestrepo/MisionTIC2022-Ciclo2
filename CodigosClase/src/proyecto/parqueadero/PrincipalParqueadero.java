@@ -13,7 +13,7 @@ public class PrincipalParqueadero {
         //Thread.sleep(10000);
         System.out.println(c1.pago());
         
-        Parqueadero p1 = new Parqueadero(5,3,2000,1000);
+        Parqueadero p1 = new Parqueadero(5,3,2000,600);
         System.out.println(p1.imprimeVacios());
         
         System.out.println(p1.parqueaVehiculo(0, 1, 1, "HYU776"));
@@ -22,6 +22,8 @@ public class PrincipalParqueadero {
         System.out.println("*****************");
         System.out.println(p1.estadoParqueadero());
         //System.out.println(p1.parqueaVehiculo(6, 6, 1, "HYU776"));
+        Thread.sleep(60000);
+        System.out.println(p1.matriz[1][1].pago());
        
     }
     
