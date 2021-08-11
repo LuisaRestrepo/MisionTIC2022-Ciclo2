@@ -22,11 +22,11 @@ public class Moto extends Vehiculo{
     public String pago() {
         Date hoy = new Date();
 
-        long  diff= hoy.getTime()-super.ingreso.getTime();
+        long diff = hoy.getTime()-super.ingreso.getTime();
         long diffSeconds = diff / 1000;
-        double precioTotal =diffSeconds * (precio/60);
+        double precioTotal = diffSeconds * (precio/60);
 
-        return "La Moto de placa "+super.placa+", lleva "+diffSeconds/60.0+" minutos, TOTAL PAGAR:"+precioTotal+"$";
+        return "La Moto de placa "+super.placa+", lleva "+Math.round(diffSeconds/60.0)+" minutos, TOTAL PAGAR:"+precioTotal+"$";
     }
     
 }

@@ -22,7 +22,7 @@ public class PrincipalParqueadero {
         System.out.println("*****************");
         System.out.println(p1.estadoParqueadero());
         //System.out.println(p1.parqueaVehiculo(6, 6, 1, "HYU776"));
-        Thread.sleep(60000);
+        Thread.sleep(30000);
         System.out.println(p1.matriz[1][1].pago());
        
     }
