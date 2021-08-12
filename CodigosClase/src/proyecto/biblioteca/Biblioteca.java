@@ -9,6 +9,10 @@ public class Biblioteca {
     private static int cantidadLibros = 0;
     private static int secuenciaID = 0;
 
+    public static void setSecuenciaID(int secuenciaID) {
+        Biblioteca.secuenciaID = secuenciaID;
+    }
+
     //Constructor
     public Biblioteca() {
         libros = new ArrayList<Material>();

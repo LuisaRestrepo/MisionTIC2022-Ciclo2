@@ -38,16 +38,19 @@ public class BibliotecaIT {
     
     @After
     public void tearDown() {
+        System.out.println("Ejecutado");
+        Biblioteca.libros.clear();
+        instance.setSecuenciaID(0);
     }
 
-    @Test
+    @Test 
     public void testAgregar() {
         System.out.println("agregar");
         String t = "A";
         String c = "B";
         String a = "C";
         int anio = 5;
-        
+        //Biblioteca instance = new Biblioteca();
         assertNotNull(instance);
         instance.agregar(t, c, a, anio);
         assertEquals(2,Biblioteca.libros.size());
@@ -62,8 +65,15 @@ public class BibliotecaIT {
     @Test
     public void testListar() {
         System.out.println("listar");
+        //Biblioteca instance = new Biblioteca();
+//        String t = "A";
+//        String c = "B";
+//        String a = "C";
+//        int anio = 5;
+//        instance.agregar(t, c, a, anio);
+        testAgregar();
         Object[][] expResult = {{0,"Fausto", "FR32", "Fausto", 2000},{1,"A","B","C",5}};
-        Object[][] result = Biblioteca.listar();      
+        Object[][] result = Biblioteca.listar();   
         assertArrayEquals(expResult, result);
         
         //fail("The test case is a prototype.");
@@ -72,8 +82,8 @@ public class BibliotecaIT {
     @Test
     public void testObtenerPorId() {
         System.out.println("obtenerPorId");
-        int id = 0;
-        Biblioteca instance = new Biblioteca();
+        int id = 8;
+        //Biblioteca instance = new Biblioteca();
         Object[][] expResult = null;
         Object[][] result = instance.obtenerPorId(id);
         assertArrayEquals(expResult, result);
@@ -83,12 +93,12 @@ public class BibliotecaIT {
     @Test
     public void testModificar() {
         System.out.println("modificar");
-        int id = 0;
+        int id = 8;
         String t = "";
         String c = "";
         String a = "";
         int anio = 0;
-        Biblioteca instance = new Biblioteca();
+        //Biblioteca instance = new Biblioteca();
         instance.modificar(id, t, c, a, anio);
         fail("The test case is a prototype.");
     }
@@ -96,8 +106,8 @@ public class BibliotecaIT {
     @Test
     public void testEliminar() {
         System.out.println("eliminar");
-        int id = 0;
-        Biblioteca instance = new Biblioteca();
+        int id = 8;
+        //Biblioteca instance = new Biblioteca();
         instance.eliminar(id);
         fail("The test case is a prototype.");
     }
