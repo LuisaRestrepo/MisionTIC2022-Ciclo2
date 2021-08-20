@@ -6,6 +6,9 @@
 package proyecto.biblioteca;
 
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,6 +41,7 @@ public class BibliotecaLogin extends javax.swing.JFrame {
         contrasena = new javax.swing.JPasswordField();
         mostrar = new javax.swing.JCheckBox();
         ingresar = new javax.swing.JButton();
+        registro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Biblioteca MinTIC");
@@ -66,6 +70,13 @@ public class BibliotecaLogin extends javax.swing.JFrame {
             }
         });
 
+        registro.setText("Registro");
+        registro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,7 +96,9 @@ public class BibliotecaLogin extends javax.swing.JFrame {
                                 .addComponent(contrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(101, 101, 101)
-                        .addComponent(ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ingresar, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                            .addComponent(registro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(75, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,7 +119,9 @@ public class BibliotecaLogin extends javax.swing.JFrame {
                 .addComponent(mostrar)
                 .addGap(40, 40, 40)
                 .addComponent(ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(registro)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -143,6 +158,15 @@ public class BibliotecaLogin extends javax.swing.JFrame {
             contrasena.setEchoChar('*');
         }
     }//GEN-LAST:event_mostrarActionPerformed
+
+    private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
+        try {
+            new BibliotecaRegistro().setVisible(true);
+            this.setVisible(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(BibliotecaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_registroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,6 +209,7 @@ public class BibliotecaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JCheckBox mostrar;
+    private javax.swing.JButton registro;
     private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }
