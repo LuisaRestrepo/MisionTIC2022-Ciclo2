@@ -25,11 +25,16 @@ public class BibliotecaGUI extends javax.swing.JFrame {
     /**
      * Creates new form BibliotecaGUI
      */
-    public BibliotecaGUI() {
+    public BibliotecaGUI(int tipoUsuario) {
         b1 = new Biblioteca();
         initComponents();
         this.getContentPane().setBackground(Color.WHITE);
         setLocationRelativeTo(null);
+        
+        if(tipoUsuario == 2){
+            modificar.setVisible(false);
+            eliminar.setVisible(false);
+        }
     }
 
     /**
@@ -381,7 +386,7 @@ public class BibliotecaGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BibliotecaGUI().setVisible(true);
+                //new BibliotecaGUI().setVisible(true);
             }
         });
     }

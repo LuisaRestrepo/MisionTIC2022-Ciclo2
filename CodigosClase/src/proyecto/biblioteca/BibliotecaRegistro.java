@@ -9,7 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import proyecto.biblioteca.controlador.BibliotecasList;
+import proyecto.biblioteca.controlador.Usuario;
+import static proyecto.biblioteca.controlador.Usuario.validarUsuario;
 import proyecto.biblioteca.modelo.bibliotecaE;
 
 /**
@@ -51,7 +54,7 @@ public class BibliotecaRegistro extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         usuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        clave = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         lista = new javax.swing.JComboBox<>();
         registrarse = new javax.swing.JButton();
@@ -71,6 +74,11 @@ public class BibliotecaRegistro extends javax.swing.JFrame {
         jLabel4.setText("Bibliotecas:");
 
         registrarse.setText("Registrarse");
+        registrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,7 +96,7 @@ public class BibliotecaRegistro extends javax.swing.JFrame {
                     .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(usuario)
-                        .addComponent(jPasswordField1)
+                        .addComponent(clave)
                         .addComponent(lista, 0, 171, Short.MAX_VALUE)))
                 .addContainerGap(35, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -110,7 +118,7 @@ public class BibliotecaRegistro extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(clave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -122,6 +130,31 @@ public class BibliotecaRegistro extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void registrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseActionPerformed
+        String n = nombre.getText();
+        String u = usuario.getText();
+        String p = new String(clave.getPassword());
+        String combo = (String) lista.getSelectedItem();
+        
+        int id = Integer.parseInt(combo.substring(0, combo.indexOf(" ")));
+        
+        
+        try {
+            if(!validarUsuario(u)){
+                Usuario.registrarUsuario(n,u,p,id);
+                JOptionPane.showMessageDialog(this, "Usuario creado");
+                new BibliotecaLogin().setVisible(true);
+                this.setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(this, "El nombre de usuario ya existe");
+            }
+            //System.out.println(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(BibliotecaRegistro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_registrarseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,11 +197,11 @@ public class BibliotecaRegistro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField clave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JComboBox<String> lista;
     private javax.swing.JTextField nombre;
     private javax.swing.JButton registrarse;

@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static proyecto.biblioteca.controlador.Usuario.obtenerPerfil;
+import static proyecto.biblioteca.controlador.Usuario.validarSesion;
+import static proyecto.biblioteca.controlador.Usuario.validarUsuario;
 
 /**
  *
@@ -130,31 +133,28 @@ public class BibliotecaLogin extends javax.swing.JFrame {
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
         String user = usuario.getText();
         String pass = new String(contrasena.getPassword());
-        //char[] pass = contrasena.getPassword();
-     
-        
-        //         for (int i = 0; i < pass.length; i++) {
-        //            pass+= pass[i]; //concatena el contenido del arreglos con cada caracter
-        //          }
-       
-        if(user.equals("mintic") && pass.equals("123")){
-            JOptionPane.showMessageDialog(this, "Logueo exitoso");
-            usuario.setText("");
-            contrasena.setText("");
-            new BibliotecaGUI().setVisible(true);
-            this.setVisible(false);
 
-        }else{
-            JOptionPane.showMessageDialog(this, "Usuario y contraseña inválido");
-            //JOptionPane.showMessageDialog(null, "Error al registrar", "Error!!.",JOptionPane.INFORMATION_MESSAGE);
+        try {
+            if (validarSesion(user, pass)) {
+                JOptionPane.showMessageDialog(this, "Logueo exitoso");
+                usuario.setText("");
+                contrasena.setText("");
+                new BibliotecaGUI(obtenerPerfil(user)).setVisible(true);
+                this.setVisible(false);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario y/o contraseña inválido");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BibliotecaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_ingresarActionPerformed
 
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
-        if(mostrar.isSelected()){
+        if (mostrar.isSelected()) {
             contrasena.setEchoChar((char) 0);
-        }else{
+        } else {
             contrasena.setEchoChar('*');
         }
     }//GEN-LAST:event_mostrarActionPerformed
