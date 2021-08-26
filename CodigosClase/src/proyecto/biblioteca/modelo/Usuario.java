@@ -1,10 +1,11 @@
-package proyecto.biblioteca.controlador;
+package proyecto.biblioteca.modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import proyecto.biblioteca.controlador.PasswordUtils;
 import proyecto.biblioteca.modelo.Conexion;
 import proyecto.biblioteca.modelo.bibliotecaE;
 

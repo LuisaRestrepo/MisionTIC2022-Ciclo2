@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.biblioteca;
+package proyecto.biblioteca.vista;
 
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import static proyecto.biblioteca.controlador.Usuario.obtenerPerfil;
-import static proyecto.biblioteca.controlador.Usuario.validarSesion;
-import static proyecto.biblioteca.controlador.Usuario.validarUsuario;
+import static proyecto.biblioteca.modelo.Usuario.obtenerPerfil;
+import static proyecto.biblioteca.modelo.Usuario.validarSesion;
+import static proyecto.biblioteca.modelo.Usuario.validarUsuario;
 
 /**
  *
@@ -24,9 +25,7 @@ public class BibliotecaLogin extends javax.swing.JFrame {
      * Creates new form BibliotecaLogin
      */
     public BibliotecaLogin() {
-        initComponents();
-        this.getContentPane().setBackground(Color.WHITE);
-        setLocationRelativeTo(null);
+        initComponents(); 
     }
 
     /**
@@ -131,41 +130,16 @@ public class BibliotecaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
-        String user = usuario.getText();
-        String pass = new String(contrasena.getPassword());
 
-        try {
-            if (validarSesion(user, pass)) {
-                JOptionPane.showMessageDialog(this, "Logueo exitoso");
-                usuario.setText("");
-                contrasena.setText("");
-                new BibliotecaGUI(obtenerPerfil(user)).setVisible(true);
-                this.setVisible(false);
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Usuario y/o contraseña inválido");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(BibliotecaLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
     }//GEN-LAST:event_ingresarActionPerformed
 
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
-        if (mostrar.isSelected()) {
-            contrasena.setEchoChar((char) 0);
-        } else {
-            contrasena.setEchoChar('*');
-        }
+
     }//GEN-LAST:event_mostrarActionPerformed
 
     private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
-        try {
-            new BibliotecaRegistro().setVisible(true);
-            this.setVisible(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(BibliotecaLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+ 
     }//GEN-LAST:event_registroActionPerformed
 
     /**
@@ -204,12 +178,12 @@ public class BibliotecaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField contrasena;
-    private javax.swing.JButton ingresar;
+    public javax.swing.JPasswordField contrasena;
+    public javax.swing.JButton ingresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JCheckBox mostrar;
-    private javax.swing.JButton registro;
-    private javax.swing.JTextField usuario;
+    public javax.swing.JCheckBox mostrar;
+    public javax.swing.JButton registro;
+    public javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }

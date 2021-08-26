@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.biblioteca;
+package proyecto.biblioteca.vista;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import proyecto.biblioteca.controlador.BibliotecasList;
-import proyecto.biblioteca.controlador.Usuario;
-import static proyecto.biblioteca.controlador.Usuario.validarUsuario;
+import proyecto.biblioteca.modelo.BibliotecasList;
+import proyecto.biblioteca.modelo.Usuario;
+import static proyecto.biblioteca.modelo.Usuario.validarUsuario;
 import proyecto.biblioteca.modelo.bibliotecaE;
 
 /**

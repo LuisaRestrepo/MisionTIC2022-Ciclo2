@@ -1,5 +1,5 @@
 
-package proyecto.biblioteca.controlador;
+package proyecto.biblioteca.modelo;
 import proyecto.biblioteca.modelo.Conexion;
 
 import java.sql.Connection;
