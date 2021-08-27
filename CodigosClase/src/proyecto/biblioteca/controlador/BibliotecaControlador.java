@@ -2,6 +2,7 @@ package proyecto.biblioteca.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import proyecto.biblioteca.modelo.BibliotecaModel;
 import proyecto.biblioteca.vista.BibliotecaGUI;
@@ -12,7 +13,7 @@ public class BibliotecaControlador implements ActionListener {
     BibliotecaGUI vista;
     BibliotecaModel modelo;
 
-    public BibliotecaControlador(int tipo) {
+    public BibliotecaControlador(int tipo) throws SQLException {
         this.vista = new BibliotecaGUI();
         this.modelo = new BibliotecaModel();
         this.vista.agregar.addActionListener(this);

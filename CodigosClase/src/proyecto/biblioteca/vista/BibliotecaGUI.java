@@ -6,11 +6,19 @@
 package proyecto.biblioteca.vista;
 
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import proyecto.biblioteca.Biblioteca;
 import static proyecto.biblioteca.Biblioteca.*;
+import proyecto.biblioteca.modelo.AutoresE;
+import proyecto.biblioteca.modelo.BibliotecaModel;
+import proyecto.biblioteca.modelo.CategoriaE;
+import proyecto.biblioteca.modelo.Material;
 
 /**
  *
@@ -23,14 +31,23 @@ public class BibliotecaGUI extends javax.swing.JFrame {
     public static TableModel modelo;
     public static String[] columnas = {"ID", "TITULO", "CODIGO", "AUTOR", "AÑO"};
 
+    public static Object[][] dataA;
+    public static TableModel modeloA;
+    public static String[] columnasA = {"ID", "NOMBRE"};
+
+    public static ArrayList<AutoresE> autoresArray;
+    public static ArrayList<AutoresE> autoresSeleccionados = new ArrayList<AutoresE   >();
+
     /**
      * Creates new form BibliotecaGUI
      */
-    public BibliotecaGUI() {
+    public BibliotecaGUI() throws SQLException {
         b1 = new Biblioteca();
         initComponents();
         this.getContentPane().setBackground(Color.WHITE);
         setLocationRelativeTo(null);
+        inicializarCombobox();
+        tabla_Listar();
 //        
 //        if(tipoUsuario == 2){
 //            modificar.setVisible(false);
@@ -59,15 +76,18 @@ public class BibliotecaGUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         categorias = new javax.swing.JComboBox<>();
         autores = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        autoresT = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+
+        };
         jPanel2 = new javax.swing.JPanel();
         JLabel2 = new javax.swing.JLabel();
         buscarID = new javax.swing.JTextField();
         modificar = new javax.swing.JButton();
         buscar = new javax.swing.JButton();
         eliminar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabla = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Biblioteca MinTIC");
@@ -106,7 +126,13 @@ public class BibliotecaGUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Categoría:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        categorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoriasActionPerformed(evt);
+            }
+        });
+
+        autoresT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -117,7 +143,12 @@ public class BibliotecaGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        autores.setViewportView(jTable1);
+        autoresT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                autoresTMouseClicked(evt);
+            }
+        });
+        autores.setViewportView(autoresT);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -244,19 +275,6 @@ public class BibliotecaGUI extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 394, 370, -1));
 
-        data = b1.listar();
-        modelo = new DefaultTableModel(data, columnas);
-        tabla.setModel(modelo
-        );
-        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tablaMousePressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tabla);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 20, 530, 554));
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -265,86 +283,155 @@ public class BibliotecaGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_codigoActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-       
+        String titulo2 = titulo.getText();
+        String codigo2 = codigo.getText();
+        int anio2 = Integer.parseInt(anio.getText());
+        String combo = (String) categorias.getSelectedItem();
+        int id = Integer.parseInt(combo.substring(0, combo.indexOf(" ")));
+        
+        try {
+            BibliotecaModel.agregarMaterial(new Material(titulo2,codigo2,autoresSeleccionados,anio2, id,1));
+        } catch (SQLException ex) {
+            Logger.getLogger(BibliotecaGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_agregarActionPerformed
 
-    private void tablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMousePressed
-
-        int id = (int) tabla.getValueAt(tabla.getSelectedRow(), 0);
-        Object[][] libro = b1.obtenerPorId(id);
-        titulo.setText((String) libro[0][1]);
-        codigo.setText((String) libro[0][2]);
-        //autor.setText((String) libro[0][3]);
-        anio.setValue(libro[0][4]);
-    }//GEN-LAST:event_tablaMousePressed
-
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
-        try {
-            int idBuscar = Integer.parseInt(buscarID.getText());
-            Object[][] libro = b1.obtenerPorId(idBuscar);
-
-            if (libro[0][0] == null) {
-                JOptionPane.showMessageDialog(this, "Libro no existe");
-            } else {
-                titulo.setText((String) libro[0][1]);
-                codigo.setText((String) libro[0][2]);
-                //autor.setText((String) libro[0][3]);
-                anio.setValue(libro[0][4]);
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "El valor ingresado no es un número");
-        }
+//        try {
+//            int idBuscar = Integer.parseInt(buscarID.getText());
+//            Object[][] libro = b1.obtenerPorId(idBuscar);
+//
+//            if (libro[0][0] == null) {
+//                JOptionPane.showMessageDialog(this, "Libro no existe");
+//            } else {
+//                titulo.setText((String) libro[0][1]);
+//                codigo.setText((String) libro[0][2]);
+//                //autor.setText((String) libro[0][3]);
+//                anio.setValue(libro[0][4]);
+//            }
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "El valor ingresado no es un número");
+//        }
     }//GEN-LAST:event_buscarActionPerformed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-        try {
-            int idBuscar = Integer.parseInt(buscarID.getText());
-            Object[][] libro = b1.obtenerPorId(idBuscar);
-
-            if (libro[0][0] == null) {
-                JOptionPane.showMessageDialog(this, "Libro no existe");
-            } else {
-                b1.eliminar(idBuscar);
-
-                data = b1.listar();
-                modelo = new DefaultTableModel(data, columnas);
-                tabla.setModel(modelo);
-                actualizarModelo();
-                JOptionPane.showMessageDialog(this, "Libro eliminado con éxito");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "El valor ingresado no es un número");
-        }
+//        try {
+//            int idBuscar = Integer.parseInt(buscarID.getText());
+//            (Object[][] libro = b1.obtenerPorId(idBuscar);
+//
+//            if (libro[0][0] == null) {
+//                JOptionPane.showMessageDialog(this, "Libro no existe");
+//            } else {
+////                b1.eliminar(idBuscar);
+////
+////                data = b1.listar();
+////                modelo = new DefaultTableModel(data, columnas);
+////                tabla.setModel(modelo);
+//                actualizarModelo();
+//                JOptionPane.showMessageDialog(this, "Libro eliminado con éxito");
+//            }
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "El valor ingresado no es un número");
+//        }
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
-        try {
-
-            int idBuscar = Integer.parseInt(buscarID.getText());
-            Object[][] libro = b1.obtenerPorId(idBuscar);
-            if (libro[0][0] == null) {
-                JOptionPane.showMessageDialog(this, "Libro no existe");
-            } else {
-                String titulo1 = titulo.getText();
-                String codigo1 = codigo.getText();
-                //String autor1 = autor.getText();
-                int anio1 = Integer.parseInt(anio.getText());
-
-                //b1.modificar(idBuscar, titulo1, codigo1, autor1, anio1);
-                JOptionPane.showMessageDialog(this, "Libro modificado con éxito");
-                actualizarModelo();
-            }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "El valor ingresado no es un número");
-        }
+//        try {
+//
+//            int idBuscar = Integer.parseInt(buscarID.getText());
+//            Object[][] libro = b1.obtenerPorId(idBuscar);
+//            if (libro[0][0] == null) {
+//                JOptionPane.showMessageDialog(this, "Libro no existe");
+//            } else {
+//                String titulo1 = titulo.getText();
+//                String codigo1 = codigo.getText();
+//                //String autor1 = autor.getText();
+//                int anio1 = Integer.parseInt(anio.getText());
+//
+//                //b1.modificar(idBuscar, titulo1, codigo1, autor1, anio1);
+//                JOptionPane.showMessageDialog(this, "Libro modificado con éxito");
+//                actualizarModelo();
+//            }
+//
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "El valor ingresado no es un número");
+//        }
 
     }//GEN-LAST:event_modificarActionPerformed
 
+    private void categoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriasActionPerformed
+
+    }//GEN-LAST:event_categoriasActionPerformed
+
+    private void autoresTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_autoresTMouseClicked
+        if (evt.getClickCount() == 2) {
+            // TODO lo del clik derechoo
+            int fila1;
+            try {
+                fila1 = autoresT.getSelectedRow();
+                if (fila1 == -1) {
+                    JOptionPane.showMessageDialog(null, "no se ha seleccionando ninguna fila");
+                } else {
+                    DefaultTableModel modelo = (DefaultTableModel) autoresT.getModel();
+                    JOptionPane.showMessageDialog(null, (String) modelo.getValueAt(fila1, 1));
+
+                    boolean validarAutor = false;
+            
+                    for(AutoresE  i : autoresSeleccionados) {
+                        if (i.getId() == autoresArray.get(fila1).getId()) {
+                            validarAutor = true;
+                        }
+                    }
+                    
+                    if(!validarAutor){
+                        autoresSeleccionados.add(autoresArray.get(fila1));
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El autor ya fue seleccionado"); 
+                    }
+                    //codigo.setText((String)modelo.getValueAt(fila1, 0));
+                    //nombre.setText((String)modelo.getValueAt(fila1, 1));
+//                    String estadoS=(String)modelo.getValueAt(fila1, 2);
+//                    if(estadoS.equalsIgnoreCase("ACTIVO")){
+//                        estado.setSelectedIndex(0);
+//                    }else{
+//                        estado.setSelectedIndex(1);
+//                    }
+//                    nombre.setEnabled(true);
+//                    estado.setEnabled(true);
+                }
+            } catch (Exception e) {
+            }
+        }
+
+    }//GEN-LAST:event_autoresTMouseClicked
+
+    public void tabla_Listar() throws SQLException {
+        DefaultTableModel modelo = new DefaultTableModel(null, new String[]{"ID", "Nombre"});
+        autoresArray = BibliotecaModel.getAutores();
+        for (AutoresE listadoObjetos1 : autoresArray) {
+            String[] registro = new String[2];
+            registro[0] = "" + listadoObjetos1.getId();
+            registro[1] = "" + listadoObjetos1.getNombre();
+            modelo.addRow(registro);
+        }
+        autoresT.setModel(modelo);
+    }
+
     public void actualizarModelo() {
-        data = b1.listar();
-        modelo = new DefaultTableModel(data, columnas);
-        tabla.setModel(modelo);
+//        data = b1.listar();
+//        modelo = new DefaultTableModel(data, columnas);
+//        tabla.setModel(modelo);
+    }
+
+    public void inicializarCombobox() throws SQLException {
+        ArrayList<CategoriaE> categorias2 = BibliotecaModel.getCategorias();
+        for (int i = 0; i < categorias2.size(); i++) {
+            //System.out.println(biblios.get(i).toString());
+            categorias.addItem(categorias2.get(i).toString());
+
+        }
+
     }
 
     /**
@@ -381,7 +468,11 @@ public class BibliotecaGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new BibliotecaGUI().setVisible(true);
+                try {
+                    new BibliotecaGUI().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(BibliotecaGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -392,6 +483,7 @@ public class BibliotecaGUI extends javax.swing.JFrame {
     public javax.swing.JButton agregar;
     public javax.swing.JFormattedTextField anio;
     javax.swing.JScrollPane autores;
+    public javax.swing.JTable autoresT;
     public javax.swing.JButton buscar;
     public javax.swing.JTextField buscarID;
     public javax.swing.JComboBox<String> categorias;
@@ -403,10 +495,7 @@ public class BibliotecaGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTable jTable1;
     public javax.swing.JButton modificar;
-    public javax.swing.JTable tabla;
     public javax.swing.JTextField titulo;
     // End of variables declaration//GEN-END:variables
 }
